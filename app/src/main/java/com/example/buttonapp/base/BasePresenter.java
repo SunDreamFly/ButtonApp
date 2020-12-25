@@ -1,12 +1,17 @@
 package com.example.buttonapp.base;
 
-public abstract class BasePresenter<M,V> {
-    protected  M model;
-    protected V view;
-
-    public BasePresenter(V view){
-        this.view =view;
-        model =getModel();
+public abstract class BasePresenter<V extends BaseView,M extends BaseModel> {
+    public V iView;
+    public M iModel;
+    public void attachView(V v){
+        iView=v;
+        iModel=getiModel();
     }
-    protected abstract M getModel();
+
+    public abstract M getiModel();
+
+    public void deTachView(){
+        iView=null;
+        iModel=null;
+    }
 }

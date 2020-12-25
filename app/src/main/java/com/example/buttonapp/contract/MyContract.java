@@ -1,19 +1,20 @@
 package com.example.buttonapp.contract;
 
+import com.example.buttonapp.base.BaseModel;
+import com.example.buttonapp.base.BaseView;
+import com.example.buttonapp.bean.HomeBean;
 import com.example.buttonapp.utils.net.NetCallBack;
 
 public class MyContract {
-    public interface InModel<B> {
-        void getData(String url, NetCallBack<B> callBack);
+    public interface InModel extends BaseModel {
+        <B> void getLoginData(String url, NetCallBack<B> callback);
     }
 
     public interface InPresenter{
-        void getData(String url);
+        void getData();
     }
 
-    public interface InView<T> {
-        void onSuccess(T t);
-
-        void onFail(String error);
+    public interface InView extends BaseView {
+        void getData(HomeBean bean);
     }
 }
