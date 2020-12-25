@@ -18,6 +18,7 @@ import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.example.buttonapp.R;
 import com.example.buttonapp.adapter.BannerAdapter;
 import com.example.buttonapp.adapter.BrandAdapter;
+import com.example.buttonapp.adapter.FoodAdapter;
 import com.example.buttonapp.adapter.HomeAdapter;
 import com.example.buttonapp.adapter.TextAdapter;
 import com.example.buttonapp.base.BaseFragment;
@@ -43,6 +44,7 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
     private ArrayList<HomeBean.DataDTO.BrandListDTO> brandListDTOS;
     private BrandAdapter brandAdapter;
     private TextAdapter textAdapter;
+    private FoodAdapter foodAdapter;
 
     @Override
     protected void initView(View view) {
@@ -65,6 +67,7 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         getGridHelper();
         getText();
         getBrandHelper();
+        getFood();
 
 
         adapter = new DelegateAdapter(virtualLayoutManager, false);
@@ -72,7 +75,20 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         adapter.addAdapter(homeAdapter);
         adapter.addAdapter(textAdapter);
         adapter.addAdapter(brandAdapter);
+        adapter.addAdapter(foodAdapter);
         rcy.setAdapter(adapter);
+    }
+
+    private void getFood() {
+        SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
+        // 公共属性
+        singleLayoutHelper.setItemCount(1);// 设置布局里Item个数
+        singleLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
+        singleLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
+        singleLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
+        singleLayoutHelper.setAspectRatio(5);// 设置设置布局内每行布局的宽与高的比
+        // 同上面Weigths属性讲解
+        foodAdapter = new FoodAdapter(getContext(), singleLayoutHelper);
     }
 
     private void getText() {

@@ -31,14 +31,14 @@ public class FoodAdapter extends DelegateAdapter.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.item_text, parent, false);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.item_food, parent, false);
         return new HomeHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         HomeHolder homeHolder= (HomeHolder) holder;
-        homeHolder.tv.setText("品牌制造商提供");
+        homeHolder.tv.setText("周一周四·新品首发");
     }
 
     @Override
@@ -50,7 +50,7 @@ public class FoodAdapter extends DelegateAdapter.Adapter {
         TextView tv;
         public HomeHolder(@NonNull View itemView) {
             super(itemView);
-            tv = itemView.findViewById(R.id.tv_text);
+            tv = itemView.findViewById(R.id.tv_food);
         }
     }
 }
