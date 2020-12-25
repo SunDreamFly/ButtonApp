@@ -96,7 +96,7 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         gridLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
         gridLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
         gridLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
-        gridLayoutHelper.setAspectRatio(1);// 设置设置布局内每行布局的宽与高的比
+        gridLayoutHelper.setAspectRatio(3);// 设置设置布局内每行布局的宽与高的比
 
         // gridLayoutHelper特有属性（下面会详细说明）
         gridLayoutHelper.setWeights(new float[]{50, 50});//设置每行中 每个网格宽度 占 每行总宽度 的比例
