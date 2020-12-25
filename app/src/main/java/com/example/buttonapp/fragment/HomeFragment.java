@@ -20,6 +20,7 @@ import com.example.buttonapp.adapter.BannerAdapter;
 import com.example.buttonapp.adapter.BrandAdapter;
 import com.example.buttonapp.adapter.FoodAdapter;
 import com.example.buttonapp.adapter.HomeAdapter;
+import com.example.buttonapp.adapter.SnacksAdapter;
 import com.example.buttonapp.adapter.TextAdapter;
 import com.example.buttonapp.base.BaseFragment;
 import com.example.buttonapp.bean.HomeBean;
@@ -45,6 +46,8 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
     private BrandAdapter brandAdapter;
     private TextAdapter textAdapter;
     private FoodAdapter foodAdapter;
+    private ArrayList<HomeBean.DataDTO.NewGoodsListDTO> goodsListDTOS;
+    private SnacksAdapter snacksAdapter;
 
     @Override
     protected void initView(View view) {
@@ -68,6 +71,7 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         getText();
         getBrandHelper();
         getFood();
+        getSnacks();
 
 
         adapter = new DelegateAdapter(virtualLayoutManager, false);
@@ -76,7 +80,30 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         adapter.addAdapter(textAdapter);
         adapter.addAdapter(brandAdapter);
         adapter.addAdapter(foodAdapter);
+        adapter.addAdapter(snacksAdapter);
         rcy.setAdapter(adapter);
+    }
+
+    private void getSnacks() {
+        //设置Grid布局
+        GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(2);
+        // 在构造函数设置每行的网格个数
+        // 公共属性
+        gridLayoutHelper.setItemCount(2);// 设置布局里Item个数
+        gridLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
+        gridLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
+        gridLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
+        gridLayoutHelper.setAspectRatio(3);// 设置设置布局内每行布局的宽与高的比
+
+        // gridLayoutHelper特有属性（下面会详细说明）
+        gridLayoutHelper.setWeights(new float[]{50, 50});//设置每行中 每个网格宽度 占 每行总宽度 的比例
+        gridLayoutHelper.setVGap(20);// 控制子元素之间的垂直间距
+        gridLayoutHelper.setHGap(20);// 控制子元素之间的水平间距
+        gridLayoutHelper.setAutoExpand(false);//是否自动填充空白区域
+        gridLayoutHelper.setSpanCount(2);// 设置每行多少个网格
+        goodsListDTOS = new ArrayList<>();
+        snacksAdapter = new SnacksAdapter(goodsListDTOS, gridLayoutHelper, getContext());
+
     }
 
     private void getFood() {
@@ -193,6 +220,10 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         List<HomeBean.DataDTO.BrandListDTO> brandList = bean.getData().getBrandList();
         brandListDTOS.addAll(brandList);
         brandAdapter.notifyDataSetChanged();
+
+        List<HomeBean.DataDTO.NewGoodsListDTO> newGoodsList = bean.getData().getNewGoodsList();
+        goodsListDTOS.addAll(newGoodsList);
+        snacksAdapter.notifyDataSetChanged();
 
     }
 }
