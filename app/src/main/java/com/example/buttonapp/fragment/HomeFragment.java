@@ -12,12 +12,14 @@ import android.view.ViewGroup;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.alibaba.android.vlayout.layout.ColumnLayoutHelper;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.example.buttonapp.R;
 import com.example.buttonapp.adapter.BannerAdapter;
 import com.example.buttonapp.adapter.BrandAdapter;
 import com.example.buttonapp.adapter.HomeAdapter;
+import com.example.buttonapp.adapter.TextAdapter;
 import com.example.buttonapp.base.BaseFragment;
 import com.example.buttonapp.bean.HomeBean;
 import com.example.buttonapp.contract.MyContract;
@@ -40,6 +42,7 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
     private HomeAdapter homeAdapter;
     private ArrayList<HomeBean.DataDTO.BrandListDTO> brandListDTOS;
     private BrandAdapter brandAdapter;
+    private TextAdapter textAdapter;
 
     @Override
     protected void initView(View view) {
@@ -60,14 +63,28 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         rcy.setLayoutManager(virtualLayoutManager);
         getSingleLayoutHelper();
         getGridHelper();
+        getText();
         getBrandHelper();
 
 
         adapter = new DelegateAdapter(virtualLayoutManager, false);
         adapter.addAdapter(singleAdapter);
         adapter.addAdapter(homeAdapter);
+        adapter.addAdapter(textAdapter);
         adapter.addAdapter(brandAdapter);
         rcy.setAdapter(adapter);
+    }
+
+    private void getText() {
+        SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
+        // 公共属性
+        singleLayoutHelper.setItemCount(1);// 设置布局里Item个数
+        singleLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
+        singleLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
+        singleLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
+        singleLayoutHelper.setAspectRatio(5);// 设置设置布局内每行布局的宽与高的比
+        // 同上面Weigths属性讲解
+        textAdapter = new TextAdapter(getContext(), singleLayoutHelper);
     }
 
     private void getBrandHelper() {
@@ -82,9 +99,9 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         gridLayoutHelper.setAspectRatio(1);// 设置设置布局内每行布局的宽与高的比
 
         // gridLayoutHelper特有属性（下面会详细说明）
-        gridLayoutHelper.setWeights(new float[]{20, 20, 20, 20, 20});//设置每行中 每个网格宽度 占 每行总宽度 的比例
-        gridLayoutHelper.setVGap(20);// 控制子元素之间的垂直间距
-        gridLayoutHelper.setHGap(20);// 控制子元素之间的水平间距
+        gridLayoutHelper.setWeights(new float[]{50, 50});//设置每行中 每个网格宽度 占 每行总宽度 的比例
+        gridLayoutHelper.setVGap(0);// 控制子元素之间的垂直间距
+        gridLayoutHelper.setHGap(0);// 控制子元素之间的水平间距
         gridLayoutHelper.setAutoExpand(false);//是否自动填充空白区域
         gridLayoutHelper.setSpanCount(2);// 设置每行多少个网格
         brandListDTOS = new ArrayList<>();
@@ -102,7 +119,7 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         gridLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
         gridLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
         gridLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
-        gridLayoutHelper.setAspectRatio(1);// 设置设置布局内每行布局的宽与高的比
+        gridLayoutHelper.setAspectRatio(5);// 设置设置布局内每行布局的宽与高的比
 
         // gridLayoutHelper特有属性（下面会详细说明）
         gridLayoutHelper.setWeights(new float[]{20, 20, 20, 20, 20});//设置每行中 每个网格宽度 占 每行总宽度 的比例
