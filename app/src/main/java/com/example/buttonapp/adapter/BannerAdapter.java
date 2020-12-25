@@ -44,7 +44,7 @@ public class BannerAdapter extends DelegateAdapter.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         BanViewHolder viewHolder = (BanViewHolder) holder;
-    viewHolder.banner.setImages(list)
+         viewHolder.banner.setImages(list)
                 .setImageLoader(new ImageLoader() {
                     @Override
                     public void displayImage(Context context, Object path, ImageView imageView) {

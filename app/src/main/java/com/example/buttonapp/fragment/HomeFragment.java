@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.example.buttonapp.R;
 import com.example.buttonapp.adapter.BannerAdapter;
+import com.example.buttonapp.adapter.HomeAdapter;
 import com.example.buttonapp.base.BaseFragment;
 import com.example.buttonapp.bean.HomeBean;
 import com.example.buttonapp.contract.MyContract;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
  */
 public class HomeFragment extends BaseFragment<MainPresenter> implements MyContract.InView {
 
@@ -32,6 +35,8 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
     private ArrayList<HomeBean.DataDTO.BannerDTO> imgs;
     private BannerAdapter singleAdapter;
     private DelegateAdapter adapter;
+    private ArrayList<HomeBean.DataDTO.ChannelDTO> channelDTOS;
+    private HomeAdapter homeAdapter;
 
     @Override
     protected void initView(View view) {
@@ -50,6 +55,39 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         rcy.setRecycledViewPool(viewPool);
         viewPool.setMaxRecycledViews(0, 10);
         rcy.setLayoutManager(virtualLayoutManager);
+        getSingleLayoutHelper();
+        getGridHelper();
+
+
+        adapter = new DelegateAdapter(virtualLayoutManager, true);
+        adapter.addAdapter(singleAdapter);
+        adapter.addAdapter(homeAdapter);
+        rcy.setAdapter(adapter);
+    }
+
+    private void getGridHelper() {
+        //设置Grid布局
+        GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(5);
+        // 在构造函数设置每行的网格个数
+        // 公共属性
+        gridLayoutHelper.setItemCount(5);// 设置布局里Item个数
+        gridLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
+        gridLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
+        gridLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
+        gridLayoutHelper.setAspectRatio(1);// 设置设置布局内每行布局的宽与高的比
+
+        // gridLayoutHelper特有属性（下面会详细说明）
+        gridLayoutHelper.setWeights(new float[]{20, 20, 20, 20, 20});//设置每行中 每个网格宽度 占 每行总宽度 的比例
+        gridLayoutHelper.setVGap(20);// 控制子元素之间的垂直间距
+        gridLayoutHelper.setHGap(20);// 控制子元素之间的水平间距
+        gridLayoutHelper.setAutoExpand(false);//是否自动填充空白区域
+        gridLayoutHelper.setSpanCount(5);// 设置每行多少个网格
+
+        channelDTOS = new ArrayList<>();
+        homeAdapter = new HomeAdapter(channelDTOS, gridLayoutHelper, getContext());
+    }
+
+    private SingleLayoutHelper getSingleLayoutHelper() {
         /**
          设置通栏布局
          banner
@@ -60,14 +98,10 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         singleLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
         singleLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
         singleLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
-        singleLayoutHelper.setAspectRatio(5);// 设置设置布局内每行布局的宽与高的比
+        singleLayoutHelper.setAspectRatio(1);// 设置设置布局内每行布局的宽与高的比
         imgs = new ArrayList<>();
-        singleAdapter = new BannerAdapter(imgs,singleLayoutHelper);
-
-
-        adapter = new DelegateAdapter(virtualLayoutManager, true);
-        adapter.addAdapter(singleAdapter);
-        rcy.setAdapter(adapter);
+        singleAdapter = new BannerAdapter(imgs, singleLayoutHelper);
+        return singleLayoutHelper;
     }
 
     @Override
@@ -90,6 +124,10 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         List<HomeBean.DataDTO.BannerDTO> banner = bean.getData().getBanner();
         imgs.addAll(banner);
         singleAdapter.notifyDataSetChanged();
+
+        List<HomeBean.DataDTO.ChannelDTO> channel = bean.getData().getChannel();
+        channelDTOS.addAll(channel);
+        homeAdapter.notifyDataSetChanged();
 
     }
 }

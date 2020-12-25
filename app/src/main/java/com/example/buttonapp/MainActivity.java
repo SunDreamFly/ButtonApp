@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         byteFragment = new ByteFragment();
         transaction.add(R.id.fl, homeFragment)
-                .add(R.id.fl, byteFragment)
+//                .add(R.id.fl, byteFragment)
                 .hide(homeFragment)
-                .hide(byteFragment)
+//                .hide(byteFragment)
                 .commit();
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
