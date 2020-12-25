@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ButtonApp</string>
+
+    <string name="main_home">首页</string>
+    <string name="main_comment">收藏</string>
+    <string name="main_message">项目</string>
+    <string name="main_edit">我的</string>
+    <string name="main_reload">个人</string>
+    <string name="more">更多</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
+
+
+
