@@ -17,10 +17,12 @@ import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.example.buttonapp.R;
 import com.example.buttonapp.adapter.BannerAdapter;
+import com.example.buttonapp.adapter.BeddingAdapter;
 import com.example.buttonapp.adapter.BrandAdapter;
 import com.example.buttonapp.adapter.FoodAdapter;
 import com.example.buttonapp.adapter.HomeAdapter;
 import com.example.buttonapp.adapter.SnacksAdapter;
+import com.example.buttonapp.adapter.SpecialAdapter;
 import com.example.buttonapp.adapter.TextAdapter;
 import com.example.buttonapp.base.BaseFragment;
 import com.example.buttonapp.bean.HomeBean;
@@ -48,6 +50,9 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
     private FoodAdapter foodAdapter;
     private ArrayList<HomeBean.DataDTO.NewGoodsListDTO> goodsListDTOS;
     private SnacksAdapter snacksAdapter;
+    private ArrayList<HomeBean.DataDTO.HotGoodsListDTO> hotGoodsListDTOS;
+    private BeddingAdapter beddingAdapter;
+    private SpecialAdapter specialAdapter;
 
     @Override
     protected void initView(View view) {
@@ -72,6 +77,8 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         getBrandHelper();
         getFood();
         getSnacks();
+        getBedding();
+        getSpecial();
 
 
         adapter = new DelegateAdapter(virtualLayoutManager, false);
@@ -81,7 +88,35 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         adapter.addAdapter(brandAdapter);
         adapter.addAdapter(foodAdapter);
         adapter.addAdapter(snacksAdapter);
+        adapter.addAdapter(beddingAdapter);
+        adapter.addAdapter(specialAdapter);
         rcy.setAdapter(adapter);
+    }
+
+    private void getSpecial() {
+        SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
+        // 公共属性
+        singleLayoutHelper.setItemCount(1);// 设置布局里Item个数
+        singleLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
+        singleLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
+        singleLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
+        singleLayoutHelper.setAspectRatio(5);// 设置设置布局内每行布局的宽与高的比
+        // 同上面Weigths属性讲解
+        specialAdapter = new SpecialAdapter(getContext(), singleLayoutHelper);
+    }
+
+    private void getBedding() {
+        SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
+        // 公共属性
+        singleLayoutHelper.setItemCount(1);// 设置布局里Item个数
+        singleLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
+        singleLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
+        singleLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
+        singleLayoutHelper.setAspectRatio(2);// 设置设置布局内每行布局的宽与高的比
+        // 同上面Weigths属性讲解
+        hotGoodsListDTOS = new ArrayList<>();
+        beddingAdapter = new BeddingAdapter(hotGoodsListDTOS, getContext(), singleLayoutHelper);
+
     }
 
     private void getSnacks() {
@@ -224,6 +259,10 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         List<HomeBean.DataDTO.NewGoodsListDTO> newGoodsList = bean.getData().getNewGoodsList();
         goodsListDTOS.addAll(newGoodsList);
         snacksAdapter.notifyDataSetChanged();
+
+        List<HomeBean.DataDTO.HotGoodsListDTO> hotGoodsList = bean.getData().getHotGoodsList();
+        hotGoodsListDTOS.addAll(hotGoodsList);
+        beddingAdapter.notifyDataSetChanged();
 
     }
 }

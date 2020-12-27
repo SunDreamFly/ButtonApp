@@ -12,61 +12,61 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
-import com.alibaba.android.vlayout.layout.GridLayoutHelper;
+import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bumptech.glide.Glide;
 import com.example.buttonapp.R;
 import com.example.buttonapp.bean.HomeBean;
 
 import java.util.ArrayList;
 
-public class BrandAdapter extends DelegateAdapter.Adapter {
-    private ArrayList<HomeBean.DataDTO.BrandListDTO> list;
-    private GridLayoutHelper singleLayoutHelper;
+public class BeddingAdapter extends DelegateAdapter.Adapter {
+    private ArrayList<HomeBean.DataDTO.HotGoodsListDTO> list;
     private Context context;
+    private SingleLayoutHelper ColumnLayoutHelper;
 
-    public BrandAdapter(ArrayList<HomeBean.DataDTO.BrandListDTO> list, GridLayoutHelper singleLayoutHelper, Context context) {
+    public BeddingAdapter(ArrayList<HomeBean.DataDTO.HotGoodsListDTO> list, Context context, SingleLayoutHelper columnLayoutHelper) {
         this.list = list;
-        this.singleLayoutHelper = singleLayoutHelper;
         this.context = context;
+        ColumnLayoutHelper = columnLayoutHelper;
     }
 
     @Override
     public LayoutHelper onCreateLayoutHelper() {
-        return singleLayoutHelper;
+        return ColumnLayoutHelper;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_brand, parent, false);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.item_bedding, parent, false);
         return new HomeHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        HomeHolder holders = (HomeHolder) holder;
-        holders.tv.setText(list.get(position).getName());
-        holders.text.setText(list.get(position).getFloor_price()+"");
-
-        Glide.with(context).load(list.get(position).getNew_pic_url()).into(holders.iv);
-
+        HomeHolder homeHolder= (HomeHolder) holder;
+        homeHolder.tv.setText(list.get(position).getName());
+        homeHolder.text.setText(list.get(position).getGoods_brief());
+        homeHolder.price.setText("￥"+list.get(position).getRetail_price()+"");
+        Glide.with(context).load(list.get(position).getList_pic_url()).into(homeHolder.iv);
     }
 
     @Override
     public int getItemCount() {
         return list.size();
     }
-    class HomeHolder extends RecyclerView.ViewHolder{
+
+    class HomeHolder extends RecyclerView.ViewHolder {
         ImageView iv;
-//        ImageView img;
         TextView tv;
         TextView text;
+        TextView price;
         public HomeHolder(@NonNull View itemView) {
             super(itemView);
-//            img = itemView.findViewById(R.id.img_brand);
-            iv = itemView.findViewById(R.id.iv_brand);
-            tv = itemView.findViewById(R.id.tv_brand);
-            text = itemView.findViewById(R.id.text_brand);
+            iv = itemView.findViewById(R.id.iv_bedding);
+            tv = itemView.findViewById(R.id.tv_bedding);
+            text = itemView.findViewById(R.id.text_deeding);
+            price = itemView.findViewById(R.id.price_bedding);
         }
     }
 }
