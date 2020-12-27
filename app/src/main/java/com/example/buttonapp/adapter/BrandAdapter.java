@@ -46,7 +46,7 @@ public class BrandAdapter extends DelegateAdapter.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         HomeHolder holders = (HomeHolder) holder;
         holders.tv.setText(list.get(position).getName());
-        holders.text.setText(list.get(position).getFloor_price()+"");
+        holders.text.setText(list.get(position).getFloor_price()+"元起");
 
         Glide.with(context).load(list.get(position).getNew_pic_url()).into(holders.iv);
 

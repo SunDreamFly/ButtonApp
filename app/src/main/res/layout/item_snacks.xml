@@ -16,6 +16,7 @@
         android:layout_gravity="center" />
 
     <TextView
+        android:textColor="#F44336"
         android:gravity="center"
         android:id="@+id/text_snacks"
         android:layout_width="match_parent"

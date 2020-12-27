@@ -36,7 +36,7 @@ public class LivingRvAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         HomeHolder homeHolder= (HomeHolder) holder;
         homeHolder.tv.setText(list.get(position).getName());
-        homeHolder.text.setText(list.get(position).getRetail_price());
+        homeHolder.text.setText("￥"+list.get(position).getRetail_price());
         Glide.with(context).load(list.get(position).getList_pic_url()).into(homeHolder.iv);
     }
 

@@ -46,7 +46,7 @@ public class SnacksAdapter extends DelegateAdapter.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         HomeHolder holder1 = (HomeHolder) holder;
         holder1.tv.setText(list.get(position).getName());
-        holder1.text.setText(list.get(position).getRetail_price());
+        holder1.text.setText("￥"+list.get(position).getRetail_price());
 
         Glide.with(context).load(list.get(position).getList_pic_url()).into(holder1.iv);
 
