@@ -9,12 +9,14 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:gravity="center"
         android:id="@+id/tv_snacks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
     <TextView
+        android:gravity="center"
         android:id="@+id/text_snacks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

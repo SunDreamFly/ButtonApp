@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
+import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bumptech.glide.Glide;
 import com.example.buttonapp.R;
@@ -22,9 +23,9 @@ import java.util.ArrayList;
 public class BeddingAdapter extends DelegateAdapter.Adapter {
     private ArrayList<HomeBean.DataDTO.HotGoodsListDTO> list;
     private Context context;
-    private SingleLayoutHelper ColumnLayoutHelper;
+    private GridLayoutHelper ColumnLayoutHelper;
 
-    public BeddingAdapter(ArrayList<HomeBean.DataDTO.HotGoodsListDTO> list, Context context, SingleLayoutHelper columnLayoutHelper) {
+    public BeddingAdapter(ArrayList<HomeBean.DataDTO.HotGoodsListDTO> list, Context context, GridLayoutHelper columnLayoutHelper) {
         this.list = list;
         this.context = context;
         ColumnLayoutHelper = columnLayoutHelper;

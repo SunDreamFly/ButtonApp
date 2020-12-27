@@ -38,7 +38,7 @@ public class LivingTextAdapter extends DelegateAdapter.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         HomeHolder homeHolder= (HomeHolder) holder;
-        homeHolder.tv.setText("居家");
+        homeHolder.tv.setText("人气推荐");
     }
 
     @Override

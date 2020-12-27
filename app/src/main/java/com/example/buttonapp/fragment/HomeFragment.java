@@ -21,6 +21,8 @@ import com.example.buttonapp.adapter.BeddingAdapter;
 import com.example.buttonapp.adapter.BrandAdapter;
 import com.example.buttonapp.adapter.FoodAdapter;
 import com.example.buttonapp.adapter.HomeAdapter;
+import com.example.buttonapp.adapter.LivingAdapter;
+import com.example.buttonapp.adapter.LivingRvAdapter;
 import com.example.buttonapp.adapter.LivingTextAdapter;
 import com.example.buttonapp.adapter.LoSpecialAdapter;
 import com.example.buttonapp.adapter.SnacksAdapter;
@@ -58,6 +60,8 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
     private LivingTextAdapter livingTextAdapter;
     private LoSpecialAdapter loSpecialAdapter;
     private ArrayList<HomeBean.DataDTO.TopicListDTO> topicListDTOS;
+    private ArrayList<HomeBean.DataDTO.CategoryListDTO> categoryListDTOS;
+    private LivingAdapter livingAdapter;
 
     @Override
     protected void initView(View view) {
@@ -97,31 +101,28 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         adapter.addAdapter(brandAdapter);
         adapter.addAdapter(foodAdapter);
         adapter.addAdapter(snacksAdapter);
+        //人气推荐
+        adapter.addAdapter(livingTextAdapter);
         adapter.addAdapter(beddingAdapter);
         adapter.addAdapter(specialAdapter);
         adapter.addAdapter(loSpecialAdapter);
-//        adapter.addAdapter(livingTextAdapter);
+        adapter.addAdapter(livingAdapter);
         rcy.setAdapter(adapter);
     }
 
 
     private void getLiving() {
         //设置Grid布局
-        GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(2);
-        // 在构造函数设置每行的网格个数
+        SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
         // 公共属性
-        gridLayoutHelper.setItemCount(2);// 设置布局里Item个数
-        gridLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
-        gridLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
-        gridLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
-        gridLayoutHelper.setAspectRatio(3);// 设置设置布局内每行布局的宽与高的比
-
-        // gridLayoutHelper特有属性（下面会详细说明）
-        gridLayoutHelper.setWeights(new float[]{50, 50});//设置每行中 每个网格宽度 占 每行总宽度 的比例
-        gridLayoutHelper.setVGap(20);// 控制子元素之间的垂直间距
-        gridLayoutHelper.setHGap(20);// 控制子元素之间的水平间距
-        gridLayoutHelper.setAutoExpand(false);//是否自动填充空白区域
-        gridLayoutHelper.setSpanCount(2);// 设置每行多少个网格
+        singleLayoutHelper.setItemCount(1);// 设置布局里Item个数
+        singleLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
+        singleLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
+        singleLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
+//        singleLayoutHelper.setAspectRatio(5);// 设置设置布局内每行布局的宽与高的比
+        // 同上面Weigths属性讲解
+        categoryListDTOS = new ArrayList<>();
+        livingAdapter = new LivingAdapter(categoryListDTOS, getContext(), singleLayoutHelper);
 
     }
 
@@ -165,17 +166,25 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
     }
 
     private void getBedding() {
-        SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
+        //设置Grid布局
+        GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(2);
+        // 在构造函数设置每行的网格个数
         // 公共属性
-        singleLayoutHelper.setItemCount(3);// 设置布局里Item个数
-        singleLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
-        singleLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
-        singleLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
-        singleLayoutHelper.setAspectRatio(3);// 设置设置布局内每行布局的宽与高的比
-        // 同上面Weigths属性讲解
-        hotGoodsListDTOS = new ArrayList<>();
-        beddingAdapter = new BeddingAdapter(hotGoodsListDTOS, getContext(), singleLayoutHelper);
+        gridLayoutHelper.setItemCount(3);// 设置布局里Item个数
+//        gridLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
+//        gridLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
+        gridLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
+//        gridLayoutHelper.setAspectRatio(3);// 设置设置布局内每行布局的宽与高的比
 
+        // gridLayoutHelper特有属性（下面会详细说明）
+        gridLayoutHelper.setWeights(new float[]{100});//设置每行中 每个网格宽度 占 每行总宽度 的比例
+        gridLayoutHelper.setVGap(20);// 控制子元素之间的垂直间距
+        gridLayoutHelper.setHGap(20);// 控制子元素之间的水平间距
+        gridLayoutHelper.setAutoExpand(false);//是否自动填充空白区域
+        gridLayoutHelper.setSpanCount(1);// 设置每行多少个网格
+
+        hotGoodsListDTOS = new ArrayList<>();
+        beddingAdapter = new BeddingAdapter(hotGoodsListDTOS, getContext(), gridLayoutHelper);
     }
 
     private void getSnacks() {
@@ -184,10 +193,10 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         // 在构造函数设置每行的网格个数
         // 公共属性
         gridLayoutHelper.setItemCount(2);// 设置布局里Item个数
-        gridLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
-        gridLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
+//        gridLayoutHelper.setPadding(20, 20, 20, 20);// 设置LayoutHelper的子元素相对LayoutHelper边缘的距离
+//        gridLayoutHelper.setMargin(20, 20, 20, 20);// 设置LayoutHelper边缘相对父控件（即RecyclerView）的距离
         gridLayoutHelper.setBgColor(Color.WHITE);// 设置背景颜色
-        gridLayoutHelper.setAspectRatio(3);// 设置设置布局内每行布局的宽与高的比
+//        gridLayoutHelper.setAspectRatio(3);// 设置设置布局内每行布局的宽与高的比
 
         // gridLayoutHelper特有属性（下面会详细说明）
         gridLayoutHelper.setWeights(new float[]{50, 50});//设置每行中 每个网格宽度 占 每行总宽度 的比例
@@ -326,6 +335,10 @@ public class HomeFragment extends BaseFragment<MainPresenter> implements MyContr
         List<HomeBean.DataDTO.TopicListDTO> topicList = bean.getData().getTopicList();
         topicListDTOS.addAll(topicList);
         loSpecialAdapter.notifyDataSetChanged();
+
+        List<HomeBean.DataDTO.CategoryListDTO> categoryList = bean.getData().getCategoryList();
+        categoryListDTOS.addAll(categoryList);
+        livingAdapter.notifyDataSetChanged();
 
     }
 }
